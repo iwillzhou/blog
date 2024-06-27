@@ -97,13 +97,13 @@ export async function getPosts(params?: GetPostsParam) {
 }
 
 export async function getAllTags(tag?: string) {
-    let hasMore = true,
-        startCursor,
-        allResults = [];
+    let hasMore = true;
+    let startCursor: string | undefined = undefined;
+    let allResults = [];
     while (hasMore) {
-        const res = await getPosts({ tag, startCursor: startCursor! });
+        const res = await getPosts({ tag, startCursor });
         hasMore = res.has_more;
-        startCursor = res.next_cursor;
+        startCursor = res.next_cursor || undefined;
         allResults.push(...res.results);
     }
     const tagCountMap = allResults
