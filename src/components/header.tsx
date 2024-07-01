@@ -15,7 +15,11 @@ import {
     SheetTitle,
     SheetHeader,
     SheetContent,
-    SheetTrigger
+    SheetTrigger,
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+    Separator
 } from 'src/components/ui';
 
 const NAV_LIST = [
@@ -23,6 +27,11 @@ const NAV_LIST = [
         key: 'home',
         label: '首页',
         href: '/'
+    },
+    {
+        key: 'posts',
+        label: '文章',
+        href: '/post'
     },
     {
         key: 'tags',
@@ -36,16 +45,25 @@ const NAV_LIST = [
     }
 ];
 
+const Logo = () => {
+    return (
+        <div className="flex items-center">
+            <Avatar>
+                <AvatarImage src="https://avatars.githubusercontent.com/u/172381913?v=4&size=64" alt="@Will" />
+                <AvatarFallback>WZ</AvatarFallback>
+            </Avatar>
+            <div className="ml-4 mt-1 font-sans">Will&apos;s notes</div>
+        </div>
+    );
+};
+
 const Header = () => {
     const [open, setOpen] = useState(false);
 
     return (
         <header className="flex items-center justify-between p-4">
             <div className="flex items-center">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                    WZ
-                </div>
-                <div className="ml-4">Tech notes</div>
+                <Logo />
                 <NavigationMenu className="ml-8 hidden lg:block">
                     <NavigationMenuList>
                         {NAV_LIST.map(i => (
@@ -74,13 +92,18 @@ const Header = () => {
                         </Button>
                     </SheetTrigger>
                     <SheetContent className="flex w-64 flex-col">
-                        <SheetHeader>
-                            <SheetTitle>目录</SheetTitle>
+                        <SheetHeader className="mb-6">
+                            <SheetTitle className="flex items-center">
+                                <Logo />
+                            </SheetTitle>
                         </SheetHeader>
                         {NAV_LIST.map(i => (
-                            <Link key={i.key} href={i.href} onClick={() => setOpen(false)}>
-                                {i.label}
-                            </Link>
+                            <div key={i.key}>
+                                <Link href={i.href} onClick={() => setOpen(false)} className="my-3 flex justify-center">
+                                    {i.label.split('').join('   ')}
+                                </Link>
+                                <Separator />
+                            </div>
                         ))}
                     </SheetContent>
                 </Sheet>

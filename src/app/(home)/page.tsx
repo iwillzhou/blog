@@ -1,18 +1,13 @@
-import Link from 'next/link';
-import { getPosts } from 'src/utils/notion';
+'use client';
 
-export default async function Home() {
-    const { results: posts } = await getPosts();
+import Spline from '@splinetool/react-spline';
+import useResizeObserver from 'use-resize-observer';
 
+export default function Home() {
+    const { ref, width = 1, height = 1 } = useResizeObserver<HTMLDivElement>();
     return (
-        <ul>
-            {posts.map(post => (
-                <li key={post.id}>
-                    <Link href={`/post/${post.slug}`}>
-                        {post.publishTime} | {post.title} | {post.tags.join()}
-                    </Link>
-                </li>
-            ))}
-        </ul>
+        <div className="w-full" ref={ref}>
+            <Spline scene="/assets/spline/robot.splinecode" style={{ height }} />
+        </div>
     );
 }
