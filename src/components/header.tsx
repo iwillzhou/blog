@@ -64,7 +64,7 @@ const Header = () => {
         <header className="flex items-center justify-between p-4">
             <div className="flex items-center">
                 <Logo />
-                <NavigationMenu className="ml-8 hidden lg:block">
+                <NavigationMenu className="ml-8 hidden md:block">
                     <NavigationMenuList>
                         {NAV_LIST.map(i => (
                             <NavigationMenuItem key={i.key}>
@@ -85,7 +85,7 @@ const Header = () => {
                 </Button>
                 <ModeToggle />
                 <Sheet open={open} onOpenChange={setOpen}>
-                    <SheetTrigger className="lg:hidden" asChild>
+                    <SheetTrigger className="md:hidden" asChild>
                         <Button variant="ghost" size="icon">
                             <Menu className="h-5 w-5" />
                             <span className="sr-only">Toggle menu</span>

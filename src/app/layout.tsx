@@ -23,7 +23,7 @@ export default function RootLayout({
                 <ThemeProvider defaultTheme="dark" attribute="class">
                     <div className="flex min-h-screen flex-col">
                         <Header />
-                        <main className="flex flex-grow">{children}</main>
+                        <main className="relative flex-auto">{children}</main>
                         <Footer />
                     </div>
                 </ThemeProvider>
