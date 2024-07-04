@@ -1,26 +1,27 @@
-import Link from 'next/link';
+import { Link } from 'src/navigation';
+import { name, type Locale } from 'src/config';
 import { Calendar, Eye, Tag } from 'lucide-react';
 import NotionRenderer from 'src/components/notion-renderer';
 import { getPosts, getPageContent } from 'src/utils/notion';
 
-export async function generateStaticParams() {
-    const { results: posts } = await getPosts();
+export async function generateStaticParams({ params: { locale } }: { params: { locale: Locale } }) {
+    const { results: posts } = await getPosts({ locale });
     return posts.map(post => ({
         slug: post.slug
     }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-    const { results: posts } = await getPosts();
-    const title = posts.find(i => i.slug === params.slug)?.title;
+export async function generateMetadata({ params: { slug, locale } }: { params: { slug: string; locale: Locale } }) {
+    const { results: posts } = await getPosts({ locale });
+    const title = posts.find(i => i.slug === slug)?.title;
     return {
-        title: `${title} | Blog`
+        title: `${title} - ${name}`
     };
 }
 
-export default async function Post({ params }: { params: { slug: string } }) {
-    const { results: posts } = await getPosts();
-    const { id: pageId, title, publishTime, tags } = posts.find(i => i.slug === params.slug) || {};
+export default async function Post({ params: { slug, locale } }: { params: { slug: string; locale: Locale } }) {
+    const { results: posts } = await getPosts({ locale });
+    const { id: pageId, title, publishTime, tags } = posts.find(i => i.slug === slug) || {};
     const recordMap = pageId && (await getPageContent(pageId));
 
     if (!pageId) {

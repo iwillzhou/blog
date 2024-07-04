@@ -1,9 +1,13 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
-import { Search, Menu } from 'lucide-react';
+import { name } from 'src/config';
+import { Menu } from 'lucide-react';
+import { Link } from 'src/navigation';
+import { useTranslations } from 'next-intl';
 import ModeToggle from 'src/components/mode-toggle';
+import LocaleToggle from 'src/components/locale-toggle';
+import GlobalSearch from 'src/components/global-search';
 import {
     Button,
     NavigationMenu,
@@ -22,29 +26,6 @@ import {
     Separator
 } from 'src/components/ui';
 
-const NAV_LIST = [
-    {
-        key: 'home',
-        label: '首页',
-        href: '/'
-    },
-    {
-        key: 'posts',
-        label: '文章',
-        href: '/post'
-    },
-    {
-        key: 'tags',
-        label: '标签',
-        href: '/tags'
-    },
-    {
-        key: 'about',
-        label: '关于',
-        href: '/about'
-    }
-];
-
 const Logo = () => {
     return (
         <div className="flex items-center">
@@ -52,13 +33,33 @@ const Logo = () => {
                 <AvatarImage src="https://avatars.githubusercontent.com/u/172381913?v=4&size=64" alt="@Will" />
                 <AvatarFallback>WZ</AvatarFallback>
             </Avatar>
-            <div className="ml-4 mt-1 font-sans">Will&apos;s notes</div>
+            <div className="ml-4 font-sans">{name}</div>
         </div>
     );
 };
 
 const Header = () => {
+    const t = useTranslations('header');
     const [open, setOpen] = useState(false);
+
+    const navData = [
+        {
+            key: 'home',
+            href: '/'
+        },
+        {
+            key: 'post',
+            href: '/post'
+        },
+        {
+            key: 'tags',
+            href: '/tags'
+        },
+        {
+            key: 'about',
+            href: '/about'
+        }
+    ].map(item => ({ ...item, label: t(item.key) }));
 
     return (
         <header className="flex items-center justify-between p-4">
@@ -66,7 +67,7 @@ const Header = () => {
                 <Logo />
                 <NavigationMenu className="ml-8 hidden md:block">
                     <NavigationMenuList>
-                        {NAV_LIST.map(i => (
+                        {navData.map(i => (
                             <NavigationMenuItem key={i.key}>
                                 <Link href={i.href} legacyBehavior passHref>
                                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -78,12 +79,10 @@ const Header = () => {
                     </NavigationMenuList>
                 </NavigationMenu>
             </div>
-            <div className="flex items-center">
-                <Button variant="ghost" size="icon">
-                    <Search className="h-5 w-5" />
-                    <span className="sr-only">Search</span>
-                </Button>
+            <div className="flex items-center gap-1">
+                <GlobalSearch />
                 <ModeToggle />
+                <LocaleToggle />
                 <Sheet open={open} onOpenChange={setOpen}>
                     <SheetTrigger className="md:hidden" asChild>
                         <Button variant="ghost" size="icon">
@@ -97,9 +96,9 @@ const Header = () => {
                                 <Logo />
                             </SheetTitle>
                         </SheetHeader>
-                        {NAV_LIST.map(i => (
+                        {navData.map(i => (
                             <div key={i.key}>
-                                <Link href={i.href} onClick={() => setOpen(false)} className="my-3 flex justify-center">
+                                <Link href={i.href} className="my-3 flex justify-center" onClick={() => setOpen(false)}>
                                     {i.label.split('').join('   ')}
                                 </Link>
                                 <Separator />

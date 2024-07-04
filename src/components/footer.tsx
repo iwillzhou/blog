@@ -1,10 +1,14 @@
 import Link from 'next/link';
+import { useLocale } from 'next-intl';
 import { Separator } from 'src/components/ui';
 
 const START_YEAR = 2024;
 
 const Footer = () => {
+    const locale = useLocale();
+    const isZh = locale === 'zh-CN';
     const currentYear = new Date().getFullYear();
+
     return (
         <footer className="py-4 text-sm text-primary">
             <div className="flex items-center justify-center space-x-2 leading-4">
@@ -15,10 +19,18 @@ const Footer = () => {
                 <Link className="hover:underline" target="_blank" href="https://x.com/iWillZhou">
                     Twitter
                 </Link>
-                <Separator orientation="vertical" className="h-3" />
-                <Link className="hover:underline" target="_blank" href="https://juejin.cn/user/2452351553638538">
-                    掘金
-                </Link>
+                {isZh && (
+                    <>
+                        <Separator orientation="vertical" className="h-3" />
+                        <Link
+                            className="hover:underline"
+                            target="_blank"
+                            href="https://juejin.cn/user/2452351553638538"
+                        >
+                            掘金
+                        </Link>
+                    </>
+                )}
                 <Separator orientation="vertical" className="h-3" />
                 <Link className="hover:underline" href="mailto:iwillzhou@outlook.com">
                     email
