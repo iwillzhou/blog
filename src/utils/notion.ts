@@ -1,7 +1,6 @@
 import { NotionCompatAPI } from 'notion-compat';
 import { Client, isFullPage } from '@notionhq/client';
-import { type Locale, defaultLocale } from 'src/config';
-import type { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
+import { type PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 
 const notion = new Client({ auth: process.env.NOTION_AUTH_TOKEN });
 const notionAPI = new NotionCompatAPI(notion);
@@ -42,15 +41,8 @@ export async function getPageContent(pageId: string) {
     return await notionAPI.getPage(pageId);
 }
 
-type GetPostsParam = {
-    locale?: Locale;
-    startCursor?: string;
-    pageSize?: number;
-    tag?: string;
-};
-
-export async function getPosts(params?: GetPostsParam) {
-    const { locale = defaultLocale, startCursor, pageSize, tag } = params ?? {};
+export async function getPosts(params: { locale: string; startCursor?: string; pageSize?: number; tag?: string }) {
+    const { locale, startCursor, pageSize, tag } = params;
     const { results, has_more, next_cursor } = await notion.databases.query({
         database_id: process.env.NOTION_DB_ID!,
         filter: {
@@ -102,15 +94,12 @@ export async function getPosts(params?: GetPostsParam) {
     };
 }
 
-type GetAllTagsParams = {
-    locale?: Locale;
-    tag?: string;
-};
-export async function getAllTags(params: GetAllTagsParams) {
-    const { tag, locale } = params;
+export async function getAllPosts(params: { locale: string; tag?: string }) {
+    const { locale, tag } = params;
     let hasMore = true;
-    let startCursor: string | undefined = undefined;
+    let startCursor: string | undefined;
     let allResults = [];
+
     while (hasMore) {
         const res = await getPosts({ tag, startCursor, locale });
         hasMore = res.has_more;
@@ -126,14 +115,14 @@ export async function getAllTags(params: GetAllTagsParams) {
             return prev;
         }, new Map());
 
-    return tagCountMap;
+    return {
+        allResults,
+        tagCountMap
+    };
 }
 
-type GetPagesParams = {
-    locale?: Locale;
-};
-export async function getPages(params: GetPagesParams) {
-    const { locale = defaultLocale } = params;
+export async function getPages(params: { locale: string }) {
+    const { locale } = params;
     const { results } = await notion.databases.query({
         database_id: process.env.NOTION_DB_ID!,
         filter: {

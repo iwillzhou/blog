@@ -1,3 +1,11 @@
 @import 'react-notion-x/src/styles.css';
 
 /* NOTION CSS OVERRIDE */
+
+
+.notion-title {
+    display: none;
+}
+.dark-mode {
+    --bg-color: var(--background);
+}

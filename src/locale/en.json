@@ -1,8 +1,8 @@
 {
     "header": {
         "home": "Home",
-        "post": "Posts",
-        "tags": "Tags",
+        "post": "Post",
+        "tag": "Tag",
         "about": "About"
     }
 }

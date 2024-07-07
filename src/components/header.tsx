@@ -52,8 +52,8 @@ const Header = () => {
             href: '/post'
         },
         {
-            key: 'tags',
-            href: '/tags'
+            key: 'tag',
+            href: '/tag'
         },
         {
             key: 'about',
@@ -69,10 +69,8 @@ const Header = () => {
                     <NavigationMenuList>
                         {navData.map(i => (
                             <NavigationMenuItem key={i.key}>
-                                <Link href={i.href} legacyBehavior passHref>
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                        {i.label}
-                                    </NavigationMenuLink>
+                                <Link href={i.href} className={navigationMenuTriggerStyle()}>
+                                    {i.label}
                                 </Link>
                             </NavigationMenuItem>
                         ))}
@@ -81,8 +79,8 @@ const Header = () => {
             </div>
             <div className="flex items-center gap-1">
                 <GlobalSearch />
-                <ModeToggle />
-                <LocaleToggle />
+                <ModeToggle className="hidden md:flex" />
+                <LocaleToggle className="hidden md:flex" />
                 <Sheet open={open} onOpenChange={setOpen}>
                     <SheetTrigger className="md:hidden" asChild>
                         <Button variant="ghost" size="icon">
@@ -104,6 +102,10 @@ const Header = () => {
                                 <Separator />
                             </div>
                         ))}
+                        <div className="flex justify-center">
+                            <ModeToggle />
+                            <LocaleToggle />
+                        </div>
                     </SheetContent>
                 </Sheet>
             </div>

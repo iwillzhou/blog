@@ -2,26 +2,26 @@ import { Link } from 'src/navigation';
 import { name, type Locale } from 'src/config';
 import { Calendar, Eye, Tag } from 'lucide-react';
 import NotionRenderer from 'src/components/notion-renderer';
-import { getPosts, getPageContent } from 'src/utils/notion';
+import { getAllPosts, getPageContent } from 'src/utils/notion';
 
 export async function generateStaticParams({ params: { locale } }: { params: { locale: Locale } }) {
-    const { results: posts } = await getPosts({ locale });
-    return posts.map(post => ({
+    const { allResults } = await getAllPosts({ locale });
+    return allResults.map(post => ({
         slug: post.slug
     }));
 }
 
 export async function generateMetadata({ params: { slug, locale } }: { params: { slug: string; locale: Locale } }) {
-    const { results: posts } = await getPosts({ locale });
-    const title = posts.find(i => i.slug === slug)?.title;
+    const { allResults } = await getAllPosts({ locale });
+    const title = allResults.find(i => i.slug === slug)?.title;
     return {
         title: `${title} - ${name}`
     };
 }
 
 export default async function Post({ params: { slug, locale } }: { params: { slug: string; locale: Locale } }) {
-    const { results: posts } = await getPosts({ locale });
-    const { id: pageId, title, publishTime, tags } = posts.find(i => i.slug === slug) || {};
+    const { allResults } = await getAllPosts({ locale });
+    const { id: pageId, title, publishTime, tags } = allResults.find(i => i.slug === slug) || {};
     const recordMap = pageId && (await getPageContent(pageId));
 
     if (!pageId) {
@@ -30,8 +30,8 @@ export default async function Post({ params: { slug, locale } }: { params: { slu
 
     return (
         <article>
-            <h1 className="notion-page !my-8 text-4xl">{title}</h1>
-            <div className="notion-page !mb-8 text-sm opacity-70">
+            <h1 className="notion-page !my-8 text-3xl">{title}</h1>
+            <div className="notion-page text-sm opacity-70">
                 <div className="flex items-center gap-4">
                     <div className="flex items-center">
                         <Calendar className="mr-2 h-4 w-4" />
@@ -46,14 +46,14 @@ export default async function Post({ params: { slug, locale } }: { params: { slu
                     <Tag className="mr-2 h-4 w-4 flex-auto" />
                     <div className="flex flex-wrap items-baseline gap-4">
                         {tags.map((tag: string) => (
-                            <Link key={tag} href={`/tags/${tag}`}>
+                            <Link key={tag} href={`/tag/${tag}`}>
                                 # {tag}
                             </Link>
                         ))}
                     </div>
                 </div>
             </div>
-            <NotionRenderer recordMap={recordMap} />
+            <NotionRenderer isBlogPost recordMap={recordMap} />
         </article>
     );
 }

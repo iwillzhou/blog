@@ -7,7 +7,7 @@ import { Languages } from 'lucide-react';
 import { Button } from 'src/components/ui';
 import { useRouter, usePathname } from 'src/navigation';
 
-export default function LocaleToggle() {
+export default function LocaleToggle({ className }: { className?: string }) {
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();
@@ -21,7 +21,7 @@ export default function LocaleToggle() {
     };
 
     return (
-        <Button variant="ghost" size="icon" disabled={isPending} onClick={onClick}>
+        <Button variant="ghost" size="icon" disabled={isPending} onClick={onClick} className={className}>
             <Languages className="h-5 w-5" />
             <span className="sr-only">Locale toggle</span>
         </Button>
