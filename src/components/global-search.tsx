@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react';
-import { Button } from 'src/lib/ui';
+import { Button } from 'src/components/ui';
 
 export default function GlobalSearch() {
     return (

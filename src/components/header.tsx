@@ -23,7 +23,7 @@ import {
     AvatarFallback,
     AvatarImage,
     Separator
-} from 'src/lib/ui';
+} from 'src/components/ui';
 
 const Logo = () => {
     return (

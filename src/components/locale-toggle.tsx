@@ -5,7 +5,7 @@ import { useLocale } from 'next-intl';
 import { Languages } from 'lucide-react';
 import { type Locale, locales } from 'src/config';
 import { useRouter, usePathname } from 'src/navigation';
-import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from 'src/lib/ui';
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from 'src/components/ui';
 
 export default function LocaleToggle({ className }: { className?: string }) {
     const locale = useLocale();
