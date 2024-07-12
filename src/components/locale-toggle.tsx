@@ -1,11 +1,11 @@
 'use client';
 
-import { locales } from 'src/config';
 import { useTransition } from 'react';
 import { useLocale } from 'next-intl';
 import { Languages } from 'lucide-react';
-import { Button } from 'src/components/ui';
+import { type Locale, locales } from 'src/config';
 import { useRouter, usePathname } from 'src/navigation';
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from 'src/lib/ui';
 
 export default function LocaleToggle({ className }: { className?: string }) {
     const locale = useLocale();
@@ -20,10 +20,24 @@ export default function LocaleToggle({ className }: { className?: string }) {
         });
     };
 
+    const onLocaleChange = (locale: Locale) => {
+        startTransition(() => {
+            router.replace(pathname, { locale });
+        });
+    };
+
     return (
-        <Button variant="ghost" size="icon" disabled={isPending} onClick={onClick} className={className}>
-            <Languages className="h-5 w-5" />
-            <span className="sr-only">Locale toggle</span>
-        </Button>
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild className={className}>
+                <Button variant="ghost" size="icon" disabled={isPending} onClick={onClick} className={className}>
+                    <Languages className="h-5 w-5" />
+                    <span className="sr-only">Locale toggle</span>
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => onLocaleChange('en')}>English</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => onLocaleChange('zh-CN')}>简体中文</DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
     );
 }

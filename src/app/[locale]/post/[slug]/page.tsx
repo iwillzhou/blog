@@ -2,7 +2,7 @@ import { Link } from 'src/navigation';
 import { name, type Locale } from 'src/config';
 import { Calendar, Eye, Tag } from 'lucide-react';
 import NotionRenderer from 'src/components/notion-renderer';
-import { getAllPosts, getPageContent } from 'src/utils/notion';
+import { getAllPosts, getPageContent } from 'src/api/notion';
 
 export async function generateStaticParams({ params: { locale } }: { params: { locale: Locale } }) {
     const { allResults } = await getAllPosts({ locale });

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { Separator } from 'src/components/ui';
+import { Separator } from 'src/lib/ui';
 
 const START_YEAR = 2024;
 

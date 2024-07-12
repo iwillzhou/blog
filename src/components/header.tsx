@@ -12,7 +12,6 @@ import {
     Button,
     NavigationMenu,
     NavigationMenuItem,
-    NavigationMenuLink,
     NavigationMenuList,
     navigationMenuTriggerStyle,
     Sheet,
@@ -24,7 +23,7 @@ import {
     AvatarFallback,
     AvatarImage,
     Separator
-} from 'src/components/ui';
+} from 'src/lib/ui';
 
 const Logo = () => {
     return (
@@ -79,8 +78,8 @@ const Header = () => {
             </div>
             <div className="flex items-center gap-1">
                 <GlobalSearch />
-                <ModeToggle className="hidden md:flex" />
-                <LocaleToggle className="hidden md:flex" />
+                <ModeToggle />
+                <LocaleToggle />
                 <Sheet open={open} onOpenChange={setOpen}>
                     <SheetTrigger className="md:hidden" asChild>
                         <Button variant="ghost" size="icon">
@@ -102,10 +101,6 @@ const Header = () => {
                                 <Separator />
                             </div>
                         ))}
-                        <div className="flex justify-center">
-                            <ModeToggle />
-                            <LocaleToggle />
-                        </div>
                     </SheetContent>
                 </Sheet>
             </div>

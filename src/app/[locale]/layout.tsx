@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google';
 import Header from 'src/components/header';
 import Footer from 'src/components/footer';
 import { Locale, locales } from 'src/config';
+import NextTopLoader from 'nextjs-toploader';
 import { NextIntlClientProvider } from 'next-intl';
 import { ThemeProvider } from 'src/components/theme-provider';
 import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
@@ -26,8 +27,9 @@ export default async function LocaleLayout({
     return (
         <html lang={locale} suppressHydrationWarning>
             <body className={inter.className}>
+                <NextTopLoader />
                 <NextIntlClientProvider messages={messages}>
-                    <ThemeProvider defaultTheme="dark" attribute="class">
+                    <ThemeProvider defaultTheme="system" attribute="class">
                         <div className="flex min-h-screen flex-col">
                             <Header />
                             <main className="relative flex-auto">{children}</main>

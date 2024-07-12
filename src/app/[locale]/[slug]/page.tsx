@@ -1,5 +1,5 @@
 import { name, type Locale } from 'src/config';
-import { getPages, getPageContent } from 'src/utils/notion';
+import { getPages, getPageContent } from 'src/api/notion';
 import NotionRenderer from 'src/components/notion-renderer';
 
 export async function generateStaticParams({ params: { locale } }: { params: { locale: Locale } }) {

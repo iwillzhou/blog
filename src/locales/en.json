@@ -4,5 +4,10 @@
         "post": "Post",
         "tag": "Tag",
         "about": "About"
+    },
+    "theme": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
     }
 }

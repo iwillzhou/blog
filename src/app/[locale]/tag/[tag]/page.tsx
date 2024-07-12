@@ -1,5 +1,5 @@
+import { getAllPosts } from 'src/api/notion';
 import { name, type Locale } from 'src/config';
-import { getAllPosts } from 'src/utils/notion';
 import { getTranslations } from 'next-intl/server';
 import ArticleList from 'src/components/article-list';
 
