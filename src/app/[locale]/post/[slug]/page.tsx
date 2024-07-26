@@ -1,5 +1,6 @@
 import { Link } from 'src/navigation';
 import { name, type Locale } from 'src/config';
+import { Comment } from 'src/components/comment';
 import { Calendar, Eye, Tag } from 'lucide-react';
 import NotionRenderer from 'src/components/notion-renderer';
 import { getAllPosts, getPageContent } from 'src/api/notion';
@@ -54,6 +55,7 @@ export default async function Post({ params: { slug, locale } }: { params: { slu
                 </div>
             </div>
             <NotionRenderer isBlogPost recordMap={recordMap} />
+            <Comment />
         </article>
     );
 }
