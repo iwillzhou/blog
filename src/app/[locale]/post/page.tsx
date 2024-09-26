@@ -10,6 +10,8 @@ export async function generateMetadata({ params: { locale } }: { params: { local
     };
 }
 
+export const revalidate = 3600; // 1h
+
 export default async function Post({ params: { locale } }: { params: { locale: Locale } }) {
     const { allResults: posts } = await getAllPosts({ locale });
     return (

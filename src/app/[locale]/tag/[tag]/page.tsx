@@ -17,6 +17,8 @@ export async function generateMetadata({ params: { tag, locale } }: { params: { 
     };
 }
 
+export const revalidate = 3600; // 1h
+
 export default async function TagDetail({ params: { tag, locale } }: { params: { tag: string; locale: Locale } }) {
     const { allResults: posts, tagCountMap } = await getAllPosts({ locale, tag });
     const t = await getTranslations({ locale, namespace: 'header' });

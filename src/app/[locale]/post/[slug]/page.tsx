@@ -20,6 +20,8 @@ export async function generateMetadata({ params: { slug, locale } }: { params: {
     };
 }
 
+export const revalidate = 3600; // 1h
+
 export default async function Post({ params: { slug, locale } }: { params: { slug: string; locale: Locale } }) {
     const { allResults } = await getAllPosts({ locale });
     const { id: pageId, title, publishTime, tags } = allResults.find(i => i.slug === slug) || {};

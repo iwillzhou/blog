@@ -10,6 +10,8 @@ export async function generateMetadata({ params: { locale } }: { params: { local
     };
 }
 
+export const revalidate = 3600; // 1h
+
 const Tag = async ({ params: { locale } }: { params: { locale: Locale } }) => {
     const { tagCountMap } = await getAllPosts({ locale });
     const t = await getTranslations({ locale, namespace: 'header' });

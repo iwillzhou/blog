@@ -17,6 +17,8 @@ export async function generateMetadata({ params: { slug, locale } }: { params: {
     };
 }
 
+export const revalidate = 3600; // 1h
+
 export default async function Post({ params: { slug, locale } }: { params: { slug: string; locale: Locale } }) {
     const pages = await getPages({ locale });
     const { id: pageId } = pages.find(i => i.slug === slug) || {};
